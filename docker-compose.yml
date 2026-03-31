@@ -7,7 +7,7 @@ services:
     env_file:
       - .env
     ports:
-      - "8000:8000"
+      - "8080:8080"
     depends_on: #aunque el profe dijo que no lo respetaba
       db:
         condition: service_healthy
@@ -24,7 +24,7 @@ services:
     networks:
       - task_network
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U $POSTGRES_USER"]
+      test: ["CMD-SHELL", "pg_isready -U $POSTGRES_USER -d $POSTGRES_DB"]
       interval: 5s
       timeout: 15s
       retries: 5
