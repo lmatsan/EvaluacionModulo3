@@ -66,8 +66,8 @@ class TaskManager:
     def get_all_tasks(self) -> list[TaskDB]:
         return self.db.query(TaskDB).all()
 
-    def update_task(self, db: Session, task_id: int, task_data: TaskUpdateField) -> TaskDB | None:
-        db_task = db.query(TaskDB).filter(TaskDB.id == task_id).first()
+    def update_task(self, task_id: int, task_data: TaskUpdateField) -> TaskDB | None:
+        db_task = self.db.query(TaskDB).filter(TaskDB.id == task_id).first()
         if not db_task:
             return None
         
@@ -75,7 +75,6 @@ class TaskManager:
         update_data = task_data.model_dump(exclude_unset=True)
         for key, value in update_data.items():
             setattr(db_task, key, value)
-        
-        db.commit()
-        db.refresh(db_task)
+        self.db.commit()
+        self.db.refresh(db_task)
         return db_task
