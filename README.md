@@ -41,6 +41,11 @@ services:
       - db
 ```
 
+### 🔒 Seguridad y Endurecimiento (Hardening)
+Se ha implementado una capa de seguridad adicional en el `Dockerfile`:
+* **Usuario no-root**: La aplicación no se ejecuta con privilegios de administrador (`root`). Se ha creado un usuario de sistema limitado (`appuser`) para ejecutar el servidor Uvicorn, reduciendo la superficie de ataque en caso de una vulnerabilidad de ejecución de código.
+* **Gestión de Permisos**: Se han ajustado los permisos de los archivos de log para que sean accesibles únicamente por el usuario de la aplicación.
+
 ---
 
 ## 🚀 Guía de Ejecución con Docker
