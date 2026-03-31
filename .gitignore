@@ -4,6 +4,9 @@ Enunciado.pdf
 # Entorno virtual
 venv/
 
+# Variables de entorno
+.env
+
 # Python
 __pycache__/
 *.py[cod]
