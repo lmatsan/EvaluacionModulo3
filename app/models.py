@@ -4,7 +4,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from pydantic import BaseModel, Field, field_validator
 from datetime import datetime, date
-import Optional
+from typing import Optional
 
 #CONFIGURACIÓN DE LA BASE DE DATOS
 # Si no existe la variable, os.environ[] lanzará un KeyError, 
