@@ -18,6 +18,31 @@ El código sigue una arquitectura modular para facilitar el mantenimiento y la e
 
 ---
 
+## 🗄️ Configuración de Base de Datos (PostgreSQL)
+
+La API está diseñada siguiendo los principios de *12-Factor App*, delegando la configuración de la infraestructura al entorno. 
+
+### Conexión Estricta
+A diferencia de versiones preliminares, **la aplicación ya no utiliza SQLite**. Se requiere obligatoriamente una variable de entorno `DATABASE_URL` para arrancar. Si esta variable no está presente, el servicio fallará al inicio para evitar inconsistencias de datos.
+
+* **Variable**: `DATABASE_URL`
+* **Formato requerido**: `postgresql+psycopg2://<USER>:<PASSWORD>@<HOSTNAME>:<PORT>/<DB_NAME>`
+* **Hostname en Docker**: El host debe ser `db` (nombre del servicio en el cluster de Docker).
+
+### Ejemplo de Configuración en `docker-compose.yml`
+
+```yaml
+services:
+  api:
+    build: .
+    environment:
+      - DATABASE_URL=postgresql+psycopg2://user:password@db:5432/mydatabase
+    depends_on:
+      - db
+```
+
+---
+
 ## 🚀 Guía de Ejecución con Docker
 
 La forma más sencilla y recomendada de ejecutar este proyecto es utilizando Docker, lo que garantiza que la base de datos y la API se configuren correctamente de forma automática.
@@ -39,7 +64,7 @@ Una vez que los contenedores estén en marcha, puedes interactuar con la API en:
 
 Documentación Interactiva (Swagger): 
 ```bash
-http://localhost:8000/docs
+http://localhost:8080/docs
 ```
 
 ### 3. Detener el Entorno

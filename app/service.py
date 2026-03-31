@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from datetime import date
-from .models import TaskDB, TaskCreate 
+from .models import TaskDB, TaskCreate, TaskUpdateField 
 
 class TaskManager:
     def __init__(self, db: Session):
@@ -62,4 +62,20 @@ class TaskManager:
             self.db.commit()
             return True
         return False
-           
+    
+    def get_all_tasks(self, db: Session) -> list[TaskDB]:
+        return db.query(TaskDB).all()
+        
+    def update_task(self, db: Session, task_id: int, task_data: TaskUpdateField) -> TaskDB | None:
+        db_task = db.query(TaskDB).filter(TaskDB.id == task_id).first()
+        if not db_task:
+            return None
+        
+        # Se Actualizan solo los campos que vengan en la petición
+        update_data = task_data.model_dump(exclude_unset=True)
+        for key, value in update_data.items():
+            setattr(db_task, key, value)
+        
+        db.commit()
+        db.refresh(db_task)
+        return db_task

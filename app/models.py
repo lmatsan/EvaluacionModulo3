@@ -4,10 +4,12 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from pydantic import BaseModel, Field, field_validator
 from datetime import datetime, date
-
+import Optional
 
 #CONFIGURACIÓN DE LA BASE DE DATOS
-SQLALCHEMY_DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./tasks.db") # Usa SQLite por defecto, pero permite configurar otra DB con la variable de entorno
+# Si no existe la variable, os.environ[] lanzará un KeyError, 
+# lo cual es perfecto para detectar errores de configuración en Docker.
+SQLALCHEMY_DATABASE_URL = os.environ["DATABASE_URL"]
 engine = create_engine(
         SQLALCHEMY_DATABASE_URL, 
         connect_args={"check_same_thread": False} if SQLALCHEMY_DATABASE_URL.startswith("sqlite") else {}
@@ -49,6 +51,12 @@ class TaskCreate(BaseModel):
 
 class TaskUpdate(BaseModel):
     completada: bool = Field(description="Estado de completado")
+
+class TaskUpdateField(BaseModel):
+    title: Optional[str] = None
+    description: Optional[str] = None
+    deadline: Optional[datetime] = None
+    is_completed: Optional[bool] = None
 
 class TaskResponse(BaseModel):
     # Solo definimos tipos; la validación estricta ya se hizo en 
