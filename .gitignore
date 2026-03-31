@@ -1,0 +1,30 @@
+# Documento entregable
+Enunciado.pdf
+
+# Entorno virtual
+venv/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Dependencias
+*.egg-info/
+.eggs/
+
+# Editor/IDE
+.vscode/
+
+# Base de datos de test
+test_tasks.db
+
+# files de log
+*.log
+
+# Database files
+*.db
+
+# Scripts de poblado base de datos y test
+seed_db.py
+test_api.py
