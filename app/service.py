@@ -63,9 +63,9 @@ class TaskManager:
             return True
         return False
     
-    def get_all_tasks(self, db: Session) -> list[TaskDB]:
-        return db.query(TaskDB).all()
-        
+    def get_all_tasks(self) -> list[TaskDB]:
+        return self.db.query(TaskDB).all()
+
     def update_task(self, db: Session, task_id: int, task_data: TaskUpdateField) -> TaskDB | None:
         db_task = db.query(TaskDB).filter(TaskDB.id == task_id).first()
         if not db_task:
