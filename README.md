@@ -64,7 +64,7 @@ El proyecto se ha desarrollado siguiendo principios de **programación Orientada
 * **Logging**: Todos los errores críticos se registran en el archivo `errores_api.log` dentro del contenedor, facilitando la depuración en entornos de producción.
 * **Wait-for-DB**: El sistema incluye una estrategia de espera (*sleep/retry*) en el arranque para asegurar que la API no intente conectar con la base de datos antes de que esta haya terminado su proceso de inicialización.
 
-### Cambios principales realizados:
+## 🔀 Cambios principales realizados:
 1.  **Tecnología**: Cambié SQLite por **PostgreSQL**.
 2.  **Despliegue**: Sustituí los pasos de `venv` y `uvicorn` local por los comandos de **Docker Compose**, que es como lo estás ejecutando ahora.
 3.  **Rutas**: Actualicé la descripción de la estructura de archivos para reflejar el uso de `Dockerfile` y `docker-compose.yml`.
