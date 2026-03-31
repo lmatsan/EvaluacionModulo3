@@ -1,0 +1,31 @@
+version: '1.0'
+
+services:
+  api:
+    build: .
+    container_name: task_api
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+    depends_on: #aunque el profe dijo que no lo respetaba
+      - db
+    networks:
+      - task_network
+
+  db:
+    image: postgres:18
+    container_name: task_db
+    env_file:
+      - .env
+    volumes:
+      - task_data:/var/lib/postgresql/data
+    networks:
+      - task_network
+
+networks:
+  task_network:
+    driver: bridge
+
+volumes:
+  task_data:
